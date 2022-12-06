@@ -7,23 +7,23 @@ namespace csharp_oop_shop_3 {
         // "public static readonly double GalloniPerLitro" è uguale a quanto scritto sopra
 
         // ATTRIBUTI
-        private double contenutoAttuale;
+        private Litri contenutoAttuale;
         private readonly Litri capienzaMassimaLitri;
         private readonly string liquido;
-        private readonly uint pH;
+        private readonly pH pH;
 
         // STATO
         private bool aperta;
 
         // PROPRIETÀ
-        public double ContenutoAttuale { get => contenutoAttuale; private set => contenutoAttuale = value; }
+        public Litri ContenutoAttuale { get => contenutoAttuale; private set => contenutoAttuale = value; }
         public Litri CapienzaMassimaLitri { get => capienzaMassimaLitri; private init => capienzaMassimaLitri = value; }
-        public uint PH { get => pH; private init => pH = value; }
+        public pH PH { get => pH; private init => pH = value; }
         public bool Aperta { get => aperta; private set => aperta = value; }
         public string Liquido { get => liquido; private init => liquido = value; }
 
         // COSTRUTTORI
-        public Bevanda(string nome, string descrizione, string liquido, Litri contenutoMassimoLitri, uint pH, double prezzoBase, double iva)
+        public Bevanda(string nome, string descrizione, string liquido, Litri contenutoMassimoLitri, pH pH, double prezzoBase, double iva)
             : base(nome, descrizione, prezzoBase, iva) {
             Liquido = LiquidoValido(liquido).ToLower();
             CapienzaMassimaLitri = contenutoMassimoLitri;
@@ -33,8 +33,8 @@ namespace csharp_oop_shop_3 {
         }
 
         // METODI PUBBLICI
-        public void Bevi(double quantoBevi) {
-            if (quantoBevi is <= 0) { // Provare a bere zero o meno
+        public void Bevi(Litri quantoBevi) {
+            if (quantoBevi <= 0) { // Provare a bere zero o meno
                 throw new ArgumentOutOfRangeException(nameof(quantoBevi), "Non puoi bere niente o meno di niente!");
             }
 
@@ -45,7 +45,7 @@ namespace csharp_oop_shop_3 {
 
             Console.WriteLine($"Provi a bere {quantoBevi} litri di {Liquido}...");
 
-            if (ContenutoAttuale is 0) { // Bottiglia già vuota
+            if (ContenutoAttuale == 0) { // Bottiglia già vuota
                 Console.WriteLine($"La bottiglia di {Liquido} è vuota, non hai potuto berne il contenuto.");
             } else if (ContenutoAttuale - quantoBevi is <= 0) { // Bottiglia svuotata dopo che hai bevuto il contenuto
                 Console.WriteLine($"Hai bevuto {ContenutoAttuale} litri e svuotato tutto il contenuto della bottiglia, non c'è altro da bere");
@@ -62,8 +62,8 @@ namespace csharp_oop_shop_3 {
         /// </summary>
         /// <param name="quantoRiempi">Quanto riempi la tua bevanda in litri</param>
         /// <exception cref="ArgumentOutOfRangeException">Tirata quando <see cref="quantoRiempi"/> è zero o negativo</exception>
-        public void Riempi(double quantoRiempi) {
-            if (quantoRiempi is <= 0) { // Provare a riempire la bottiglia con zero o meno
+        public void Riempi(Litri quantoRiempi) {
+            if (quantoRiempi <= 0) { // Provare a riempire la bottiglia con zero o meno
                 throw new ArgumentOutOfRangeException(nameof(quantoRiempi), "Non puoi riempire la bottiglia con niente o meno di niente!");
             }
 
@@ -84,7 +84,6 @@ namespace csharp_oop_shop_3 {
                 ContenutoAttuale += quantoRiempi;
             }
         }
-
 
         public void Apri() {
             Aperta = true;
