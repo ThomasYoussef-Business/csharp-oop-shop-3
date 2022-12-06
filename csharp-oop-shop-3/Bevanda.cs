@@ -1,24 +1,35 @@
-﻿namespace csharp_oop_shop_3 {
+﻿using TipiCustom;
+
+namespace csharp_oop_shop_3 {
     public class Bevanda : Prodotto {
+        // COSTANTI
+        public const double GalloniPerLitro = 3.785; // I valori costanti sono anche static in modo implicito
+        // "public static readonly double GalloniPerLitro" è uguale a quanto scritto sopra
+
         // ATTRIBUTI
         private double contenutoAttuale;
-        private readonly double contenutoMassimoLitri;
+        private readonly Litri capienzaMassimaLitri;
         private readonly string liquido;
+        private readonly uint pH;
+
+        // STATO
         private bool aperta;
 
         // PROPRIETÀ
-        public double ContenutoAttuale { get => contenutoAttuale; private set => contenutoAttuale = Math.Clamp(value, 0, ContenutoMassimoLitri); }
-        public double ContenutoMassimoLitri { get => contenutoMassimoLitri; private init => contenutoMassimoLitri = Math.Max(value, 0); }
+        public double ContenutoAttuale { get => contenutoAttuale; private set => contenutoAttuale = value; }
+        public Litri CapienzaMassimaLitri { get => capienzaMassimaLitri; private init => capienzaMassimaLitri = value; }
+        public uint PH { get => pH; private init => pH = value; }
         public bool Aperta { get => aperta; private set => aperta = value; }
         public string Liquido { get => liquido; private init => liquido = value; }
 
         // COSTRUTTORI
-        public Bevanda(string nome, string descrizione, string liquido, double contenutoMassimoLitri, double prezzoBase, double iva)
+        public Bevanda(string nome, string descrizione, string liquido, Litri contenutoMassimoLitri, uint pH, double prezzoBase, double iva)
             : base(nome, descrizione, prezzoBase, iva) {
             Liquido = LiquidoValido(liquido).ToLower();
-            ContenutoMassimoLitri = MassimoBevandaValido(contenutoMassimoLitri);
+            CapienzaMassimaLitri = contenutoMassimoLitri;
+            PH = pH;
             Aperta = false;
-            ContenutoAttuale = ContenutoMassimoLitri;
+            ContenutoAttuale = CapienzaMassimaLitri;
         }
 
         // METODI PUBBLICI
@@ -50,7 +61,7 @@
         /// Metodo per provare a riempire la bottiglia di una bevanda
         /// </summary>
         /// <param name="quantoRiempi">Quanto riempi la tua bevanda in litri</param>
-        /// <exception cref="ArgumentOutOfRangeException">Tirata quando <see cref="quantoRiempi"/> è 0 o negativo</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Tirata quando <see cref="quantoRiempi"/> è zero o negativo</exception>
         public void Riempi(double quantoRiempi) {
             if (quantoRiempi is <= 0) { // Provare a riempire la bottiglia con zero o meno
                 throw new ArgumentOutOfRangeException(nameof(quantoRiempi), "Non puoi riempire la bottiglia con niente o meno di niente!");
@@ -63,16 +74,17 @@
 
             Console.WriteLine($"Provi a riempire una bottiglia di {Liquido} con {quantoRiempi} litri...");
 
-            if (ContenutoAttuale.Equals(ContenutoMassimoLitri)) { // Bottiglia già piena
+            if (ContenutoAttuale.Equals(CapienzaMassimaLitri)) { // Bottiglia già piena
                 Console.WriteLine("La bottiglia è già piena.");
-            } else if (ContenutoAttuale + quantoRiempi > ContenutoMassimoLitri) { // Bottiglia piena dopo averla riempita
+            } else if (ContenutoAttuale + quantoRiempi > CapienzaMassimaLitri) { // Bottiglia piena dopo averla riempita
                 Console.WriteLine($"Hai riempito la bottiglia di {Liquido} fino alla massima capacità.");
-                ContenutoAttuale = ContenutoMassimoLitri;
+                ContenutoAttuale = CapienzaMassimaLitri;
             } else { // Bottiglia con ancora dello spazio dopo questa operazione
                 Console.WriteLine($"Hai riempito la bottiglia di {Liquido} con {quantoRiempi} litri.");
                 ContenutoAttuale += quantoRiempi;
             }
         }
+
 
         public void Apri() {
             Aperta = true;
@@ -82,25 +94,28 @@
             Aperta = false;
         }
 
+        public static double ConvertiInGalloni(double litri) => litri * GalloniPerLitro;
+
         // METODI PRIVATI
         private static string LiquidoValido(string liquido) {
             if (!string.IsNullOrWhiteSpace(liquido)) {
                 return liquido;
             } else {
-                throw new ArgumentNullException(nameof(liquido), $"{nameof(liquido)} non può essere vuoto o nullo");
-            }
-        }
-        private static double MassimoBevandaValido(double contenutoMassimoLitri) {
-            if (contenutoMassimoLitri is > 0) {
-                return contenutoMassimoLitri;
-            } else {
-                throw new ArgumentOutOfRangeException(nameof(contenutoMassimoLitri));
+                throw new LiquidoInvalido(nameof(liquido), $"{nameof(liquido)} non può essere vuoto o nullo.");
             }
         }
     }
 
     public class CapienzaInvalidaException : ArgumentOutOfRangeException {
         public CapienzaInvalidaException() : base() { }
-        public CapienzaInvalidaException(string message) : base(message) { }
+        public CapienzaInvalidaException(string paramName) : base(paramName) { }
+        public CapienzaInvalidaException(string paramName, string message) : base(paramName, message) { }
     }
+
+    public class LiquidoInvalido : ArgumentNullException {
+        public LiquidoInvalido() : base() { }
+        public LiquidoInvalido(string paramName) : base(paramName) { }
+        public LiquidoInvalido(string paramName, string message) : base(paramName, message) { }
+    }
+
 }
