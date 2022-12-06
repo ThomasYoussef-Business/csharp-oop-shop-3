@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>csharp_oop_shop_riprova</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\thoma\Desktop\Desktop\Programming\NET Course\repos\csharp-oop-shop-3\csharp-oop-shop-3\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\thoma\Desktop\Desktop\Programming\NET Course\repos\csharp-oop-shop-3\csharp-oop-shop-3\.editorconfig" />
+  </ItemGroup>
+
+</Project>
