@@ -23,28 +23,28 @@ using csharp_oop_shop_3;
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
 Bevanda bottigliaDiAcqua = new(nome: "Bottiglia di acqua",
-                        descrizione: "Una bottiglia contenente un litro e mezzo di acqua",
-                        contenutoMassimoLitri: 1.5,
-                        pH: 7,
-                        liquido: "acqua",
-                        prezzoBase: Prodotto.PrezzoBaseDaComplessivo(2.99, 0.08),
-                        iva: 0.08);
+                               descrizione: "Una bottiglia contenente un litro e mezzo di acqua",
+                               liquido: "acqua",
+                               contenutoMassimoLitri: -1.5,
+                               pH: 7,
+                               prezzoBase: Prodotto.PrezzoBaseDaComplessivo(2.99, 0.08),
+                               iva: 0.08);
 
 Bevanda succoDiArancia = new(nome: "Succo all'arancia",
-                        descrizione: "Una bottiglia di succo di arance, ricco di Vitamina C",
-                        contenutoMassimoLitri: 2,
-                        pH: 2.46,
-                        liquido: "succo all'arancia",
-                        prezzoBase: Prodotto.PrezzoBaseDaComplessivo(4.99, 0.05),
-                        iva: 0.05);
+                             descrizione: "Una bottiglia di succo di arance, ricco di Vitamina C",
+                             liquido: "succo all'arancia",
+                             contenutoMassimoLitri: 2,
+                             pH: 2.46,
+                             prezzoBase: Prodotto.PrezzoBaseDaComplessivo(4.99, 0.05),
+                             iva: 0.05);
 
 Bevanda teAllaPesca = new(nome: "Tè alla pesca",
-                        descrizione: "Una bottiglia di tè alla pesca, perfetto per l'estate",
-                        contenutoMassimoLitri: 1.5,
-                        pH: 3.11,
-                        liquido: "tè alla pesca",
-                        prezzoBase: Prodotto.PrezzoBaseDaComplessivo(4.49, 0.06),
-                        iva: 0.06);
+                          descrizione: "Una bottiglia di tè alla pesca, perfetto per l'estate",
+                          liquido: "tè alla pesca",
+                          contenutoMassimoLitri: 1.5,
+                          pH: 3.11,
+                          prezzoBase: Prodotto.PrezzoBaseDaComplessivo(4.49, 0.06),
+                          iva: 0.06);
 
 Prodotto prodottoUtente = null;
 
@@ -69,8 +69,6 @@ while (continua) {
         Console.WriteLine("Questi input non sono validi! Riprova.");
     }
 }
-
-
 
 List<Prodotto> prodotti = new() { bottigliaDiAcqua, succoDiArancia, teAllaPesca, prodottoUtente };
 foreach (Prodotto p in prodotti) {

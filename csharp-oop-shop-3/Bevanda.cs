@@ -10,7 +10,7 @@ namespace csharp_oop_shop_3 {
         private Litri capienzaAttuale;
         private readonly Litri capienzaMassimaLitri;
         private readonly string liquido;
-        private readonly pH pH;
+        private readonly PH pH;
 
         // STATO
         private bool aperta;
@@ -18,12 +18,12 @@ namespace csharp_oop_shop_3 {
         // PROPRIETÀ
         public Litri CapienzaAttuale { get => capienzaAttuale; private set => capienzaAttuale = value; }
         public Litri CapienzaMassimaLitri { get => capienzaMassimaLitri; private init => capienzaMassimaLitri = value; }
-        public pH PH { get => pH; private init => pH = value; }
+        public PH PH { get => pH; private init => pH = value; }
         public bool Aperta { get => aperta; private set => aperta = value; }
         public string Liquido { get => liquido; private init => liquido = value; }
 
         // COSTRUTTORI
-        public Bevanda(string nome, string descrizione, string liquido, Litri contenutoMassimoLitri, pH pH, double prezzoBase, double iva)
+        public Bevanda(string nome, string descrizione, string liquido, Litri contenutoMassimoLitri, PH pH, double prezzoBase, double iva)
             : base(nome, descrizione, prezzoBase, iva) {
             Liquido = LiquidoValido(liquido).ToLower();
             CapienzaMassimaLitri = contenutoMassimoLitri;
@@ -54,7 +54,6 @@ namespace csharp_oop_shop_3 {
                 CapienzaAttuale -= quantoBevi;
                 Console.WriteLine($"Hai bevuto {quantoBevi} di {Liquido}. C'è ancora {CapienzaAttuale} di {Liquido} nella bottiglia");
             }
-
         }
 
         public void Riempi(Litri quantoRiempi) {
@@ -95,7 +94,7 @@ Capienza massima: {CapienzaMassimaLitri}
 Capienza attuale: {CapienzaAttuale}
 pH: {PH}";
         }
-        
+
         public static double ConvertiInGalloni(double litri) => litri * GalloniPerLitro;
 
         // METODI PRIVATI
@@ -112,12 +111,14 @@ pH: {PH}";
         public CapienzaInvalidaException() : base() { }
         public CapienzaInvalidaException(string paramName) : base(paramName) { }
         public CapienzaInvalidaException(string paramName, string message) : base(paramName, message) { }
+        public CapienzaInvalidaException(string message, Exception innerException) : base(message, innerException) { }
+        public CapienzaInvalidaException(string paramName, object actualValue, string message) : base(paramName, actualValue, message) { }
     }
 
     public class LiquidoInvalido : ArgumentNullException {
         public LiquidoInvalido() : base() { }
         public LiquidoInvalido(string paramName) : base(paramName) { }
         public LiquidoInvalido(string paramName, string message) : base(paramName, message) { }
+        public LiquidoInvalido(string message, Exception innerException) : base(message, innerException) { }
     }
-
 }

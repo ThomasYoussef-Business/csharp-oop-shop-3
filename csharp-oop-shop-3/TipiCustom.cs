@@ -14,16 +14,16 @@
         }
     }
 
-    public readonly struct pH {
+    public readonly struct PH {
         private readonly double v;
 
-        public pH(double v) {
+        public PH(double v) {
             if (v is < 0 or > 14) { throw new ArgumentOutOfRangeException(nameof(v)); }
             this.v = v;
         }
 
-        public static implicit operator pH(double v) { return new pH(v); }
-        public static implicit operator double(pH litri) { return litri.v; }
+        public static implicit operator PH(double v) { return new PH(v); }
+        public static implicit operator double(PH litri) { return litri.v; }
         public override string ToString() {
             return v.ToString();
         }
