@@ -46,7 +46,7 @@ Bevanda teAllaPesca = new(nome: "Tè alla pesca",
                         prezzoBase: Prodotto.PrezzoBaseDaComplessivo(4.49, 0.06),
                         iva: 0.06);
 
-Prodotto prodottoUtente;
+Prodotto prodottoUtente = null;
 
 string nome, descrizione;
 double prezzoBase, iva;
