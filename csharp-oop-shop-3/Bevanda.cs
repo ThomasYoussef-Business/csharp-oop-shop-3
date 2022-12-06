@@ -7,7 +7,7 @@ namespace csharp_oop_shop_3 {
         // "public static readonly double GalloniPerLitro" è uguale a quanto scritto sopra
 
         // ATTRIBUTI
-        private Litri contenutoAttuale;
+        private Litri capienzaAttuale;
         private readonly Litri capienzaMassimaLitri;
         private readonly string liquido;
         private readonly pH pH;
@@ -16,7 +16,7 @@ namespace csharp_oop_shop_3 {
         private bool aperta;
 
         // PROPRIETÀ
-        public Litri ContenutoAttuale { get => contenutoAttuale; private set => contenutoAttuale = value; }
+        public Litri CapienzaAttuale { get => capienzaAttuale; private set => capienzaAttuale = value; }
         public Litri CapienzaMassimaLitri { get => capienzaMassimaLitri; private init => capienzaMassimaLitri = value; }
         public pH PH { get => pH; private init => pH = value; }
         public bool Aperta { get => aperta; private set => aperta = value; }
@@ -29,7 +29,7 @@ namespace csharp_oop_shop_3 {
             CapienzaMassimaLitri = contenutoMassimoLitri;
             PH = pH;
             Aperta = false;
-            ContenutoAttuale = CapienzaMassimaLitri;
+            CapienzaAttuale = CapienzaMassimaLitri;
         }
 
         // METODI PUBBLICI
@@ -45,23 +45,18 @@ namespace csharp_oop_shop_3 {
 
             Console.WriteLine($"Provi a bere {quantoBevi} litri di {Liquido}...");
 
-            if (ContenutoAttuale == 0) { // Bottiglia già vuota
+            if (CapienzaAttuale == 0) { // Bottiglia già vuota
                 Console.WriteLine($"La bottiglia di {Liquido} è vuota, non hai potuto berne il contenuto.");
-            } else if (ContenutoAttuale - quantoBevi is <= 0) { // Bottiglia svuotata dopo che hai bevuto il contenuto
-                Console.WriteLine($"Hai bevuto {ContenutoAttuale} litri e svuotato tutto il contenuto della bottiglia, non c'è altro da bere");
-                ContenutoAttuale = 0;
+            } else if (CapienzaAttuale - quantoBevi is <= 0) { // Bottiglia svuotata dopo che hai bevuto il contenuto
+                Console.WriteLine($"Hai bevuto {CapienzaAttuale} litri e svuotato tutto il contenuto della bottiglia, non c'è altro da bere");
+                CapienzaAttuale = 0;
             } else { // Bottiglia non vuota dopo aver bevuto
-                ContenutoAttuale -= quantoBevi;
-                Console.WriteLine($"Hai bevuto {quantoBevi} di {Liquido}. C'è ancora {ContenutoAttuale} di {Liquido} nella bottiglia");
+                CapienzaAttuale -= quantoBevi;
+                Console.WriteLine($"Hai bevuto {quantoBevi} di {Liquido}. C'è ancora {CapienzaAttuale} di {Liquido} nella bottiglia");
             }
 
         }
 
-        /// <summary>
-        /// Metodo per provare a riempire la bottiglia di una bevanda
-        /// </summary>
-        /// <param name="quantoRiempi">Quanto riempi la tua bevanda in litri</param>
-        /// <exception cref="ArgumentOutOfRangeException">Tirata quando <see cref="quantoRiempi"/> è zero o negativo</exception>
         public void Riempi(Litri quantoRiempi) {
             if (quantoRiempi <= 0) { // Provare a riempire la bottiglia con zero o meno
                 throw new ArgumentOutOfRangeException(nameof(quantoRiempi), "Non puoi riempire la bottiglia con niente o meno di niente!");
@@ -74,14 +69,14 @@ namespace csharp_oop_shop_3 {
 
             Console.WriteLine($"Provi a riempire una bottiglia di {Liquido} con {quantoRiempi} litri...");
 
-            if (ContenutoAttuale.Equals(CapienzaMassimaLitri)) { // Bottiglia già piena
+            if (CapienzaAttuale.Equals(CapienzaMassimaLitri)) { // Bottiglia già piena
                 Console.WriteLine("La bottiglia è già piena.");
-            } else if (ContenutoAttuale + quantoRiempi > CapienzaMassimaLitri) { // Bottiglia piena dopo averla riempita
+            } else if (CapienzaAttuale + quantoRiempi > CapienzaMassimaLitri) { // Bottiglia piena dopo averla riempita
                 Console.WriteLine($"Hai riempito la bottiglia di {Liquido} fino alla massima capacità.");
-                ContenutoAttuale = CapienzaMassimaLitri;
+                CapienzaAttuale = CapienzaMassimaLitri;
             } else { // Bottiglia con ancora dello spazio dopo questa operazione
                 Console.WriteLine($"Hai riempito la bottiglia di {Liquido} con {quantoRiempi} litri.");
-                ContenutoAttuale += quantoRiempi;
+                CapienzaAttuale += quantoRiempi;
             }
         }
 
@@ -93,6 +88,14 @@ namespace csharp_oop_shop_3 {
             Aperta = false;
         }
 
+        public override string ToString() {
+            return $@"{base.ToString()}
+Contiene {Liquido}
+Capienza massima: {CapienzaMassimaLitri}
+Capienza attuale: {CapienzaAttuale}
+pH: {PH}";
+        }
+        
         public static double ConvertiInGalloni(double litri) => litri * GalloniPerLitro;
 
         // METODI PRIVATI

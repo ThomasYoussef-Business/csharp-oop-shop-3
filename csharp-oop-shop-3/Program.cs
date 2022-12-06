@@ -16,10 +16,9 @@
  * un attributo statico alla classe Prodotto che permetta di contare quanti Prodotti ho istanziato
  * fino ad un determinato istante nel mio programma.
  * Alla fine o durante l’esecuzione del programma principale stampare in Console l’ammontare dei prodotti creati nel vostro negozio online.
- */ 
+ */
 
 using csharp_oop_shop_3;
-using TipiCustom;
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
@@ -28,9 +27,54 @@ Bevanda bottigliaDiAcqua = new(nome: "Bottiglia di acqua",
                         contenutoMassimoLitri: 1.5,
                         pH: 7,
                         liquido: "acqua",
-                        prezzoBase: Prodotto.PrezzoBaseDaComplessivo(2.99, 0.2),
-                        iva: 0.2);
+                        prezzoBase: Prodotto.PrezzoBaseDaComplessivo(2.99, 0.08),
+                        iva: 0.08);
 
-bottigliaDiAcqua.Apri();
-bottigliaDiAcqua.Bevi(1.5);
-bottigliaDiAcqua.Chiudi();
+Bevanda succoDiArancia = new(nome: "Succo all'arancia",
+                        descrizione: "Una bottiglia di succo di arance, ricco di Vitamina C",
+                        contenutoMassimoLitri: 2,
+                        pH: 2.46,
+                        liquido: "succo all'arancia",
+                        prezzoBase: Prodotto.PrezzoBaseDaComplessivo(4.99, 0.05),
+                        iva: 0.05);
+
+Bevanda teAllaPesca = new(nome: "Tè alla pesca",
+                        descrizione: "Una bottiglia di tè alla pesca, perfetto per l'estate",
+                        contenutoMassimoLitri: 1.5,
+                        pH: 3.11,
+                        liquido: "tè alla pesca",
+                        prezzoBase: Prodotto.PrezzoBaseDaComplessivo(4.49, 0.06),
+                        iva: 0.06);
+
+Prodotto prodottoUtente;
+
+string nome, descrizione;
+double prezzoBase, iva;
+
+bool continua = true;
+while (continua) {
+    try {
+        Console.WriteLine("Inserisci un nome per il tuo prodotto: ");
+        nome = Console.ReadLine();
+        Console.WriteLine("Inserisci una descrizione per il tuo prodotto: ");
+        descrizione = Console.ReadLine();
+        Console.WriteLine("Inserisci un prezzo per il tuo prodotto: ");
+        prezzoBase = double.Parse(Console.ReadLine());
+        Console.WriteLine("Inserisci una tassa IVA da 0 a 1 per il tuo prodotto: ");
+        iva = double.Parse(Console.ReadLine());
+
+        prodottoUtente = new Prodotto(nome, descrizione, prezzoBase, iva);
+        continua = false;
+    } catch (System.Exception) {
+        Console.WriteLine("Questi input non sono validi! Riprova.");
+    }
+}
+
+
+
+List<Prodotto> prodotti = new() { bottigliaDiAcqua, succoDiArancia, teAllaPesca, prodottoUtente };
+foreach (Prodotto p in prodotti) {
+    Console.WriteLine(p + Environment.NewLine);
+}
+
+Console.WriteLine($"Hai creato {Prodotto.ProdottiCreati} prodotti nel tuo programma!");

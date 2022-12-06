@@ -1,5 +1,9 @@
 ﻿namespace csharp_oop_shop_3 {
     public class Prodotto {
+        // ATTRIBUTI STATICI
+        private static int prodottiCreati = 0;
+        public static int ProdottiCreati { get => prodottiCreati; private set => prodottiCreati = value; }
+
         // ATTRIBUTI
         private readonly string codice;
         private readonly string nome;
@@ -23,6 +27,7 @@
             Descrizione = descrizione;
             PrezzoBase = PrezzoValidato(prezzoBase);
             Iva = IvaValidata(iva);
+            ProdottiCreati++;
         }
 
         // METODI PUBBLICI
